@@ -1,0 +1,8 @@
+H:\C# Project\AlgorithmProgram\AlgorithmProgram\bin\Debug\AlgorithmProgram.exe.config
+H:\C# Project\AlgorithmProgram\AlgorithmProgram\bin\Debug\AlgorithmProgram.exe
+H:\C# Project\AlgorithmProgram\AlgorithmProgram\bin\Debug\AlgorithmProgram.pdb
+H:\C# Project\AlgorithmProgram\AlgorithmProgram\obj\Debug\AlgorithmProgram.csproj.AssemblyReference.cache
+H:\C# Project\AlgorithmProgram\AlgorithmProgram\obj\Debug\AlgorithmProgram.csproj.SuggestedBindingRedirects.cache
+H:\C# Project\AlgorithmProgram\AlgorithmProgram\obj\Debug\AlgorithmProgram.csproj.CoreCompileInputs.cache
+H:\C# Project\AlgorithmProgram\AlgorithmProgram\obj\Debug\AlgorithmProgram.exe
+H:\C# Project\AlgorithmProgram\AlgorithmProgram\obj\Debug\AlgorithmProgram.pdb
