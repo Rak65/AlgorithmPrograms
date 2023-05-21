@@ -9,64 +9,94 @@ namespace AlgorithmProgram
 {
     public class Program
     {
-        // Bubble Sort algorithm to sort an array
-        public static void Sort<T>(T[] arr) where T : IComparable<T>
+        // Merge Sort algorithm to sort a list
+        public static void Sort<T>(List<T> list) where T : IComparable<T>
         {
-            int n = arr.Length;
-            bool swapped;
-
-            for (int i = 0; i < n - 1; i++)
+            if (list.Count <= 1)
             {
-                swapped = false;
+                return;
+            }
 
-                for (int j = 0; j < n - i - 1; j++)
+            int mid = list.Count / 2;
+            List<T> left = new List<T>();
+            List<T> right = new List<T>();
+
+            for (int i = 0; i < mid; i++)
+            {
+                left.Add(list[i]);
+            }
+
+            for (int i = mid; i < list.Count; i++)
+            {
+                right.Add(list[i]);
+            }
+
+            Sort(left);
+            Sort(right);
+            Merge(list, left, right);
+        }
+
+        private static void Merge<T>(List<T> mergedList, List<T> left, List<T> right) where T : IComparable<T>
+        {
+            int leftIndex = 0;
+            int rightIndex = 0;
+            int mergedIndex = 0;
+
+            while (leftIndex < left.Count && rightIndex < right.Count)
+            {
+                if (left[leftIndex].CompareTo(right[rightIndex]) <= 0)
                 {
-                    if (arr[j].CompareTo(arr[j + 1]) > 0)
-                    {
-                        // Swap arr[j] and arr[j + 1]
-                        T temp = arr[j];
-                        arr[j] = arr[j + 1];
-                        arr[j + 1] = temp;
-
-                        swapped = true;
-                    }
+                    mergedList[mergedIndex] = left[leftIndex];
+                    leftIndex++;
+                }
+                else
+                {
+                    mergedList[mergedIndex] = right[rightIndex];
+                    rightIndex++;
                 }
 
-                // If no elements were swapped in the inner loop, the array is already sorted
-                if (!swapped)
-                {
-                    break;
-                }
+                mergedIndex++;
+            }
+
+            while (leftIndex < left.Count)
+            {
+                mergedList[mergedIndex] = left[leftIndex];
+                leftIndex++;
+                mergedIndex++;
+            }
+
+            while (rightIndex < right.Count)
+            {
+                mergedList[mergedIndex] = right[rightIndex];
+                rightIndex++;
+                mergedIndex++;
             }
         }
 
         public static void Main(string[] args)
         {
-               // Prompt the user to enter the number of integers
-                Console.Write("Enter the number of integers: ");
-                int count = int.Parse(Console.ReadLine());
 
-                // Create an array to store the integers
-                int[] numbers = new int[count];
+            // Create a list of strings
+            List<string> strings = new List<string>();
 
-                // Prompt the user to enter the integers
-                for (int i = 0; i < count; i++)
-                {
-                    Console.Write("Enter integer #{0}: ", i + 1);
-                    numbers[i] = int.Parse(Console.ReadLine());
-                }
+            // Prompt the user to enter the strings
+            Console.WriteLine("Enter strings (one per line). Enter 'done' to finish.");
+            string input;
+            while ((input = Console.ReadLine()) != "done")
+            {
+                strings.Add(input);
+            }
 
-                // Sort the array using Bubble Sort
-                Sort(numbers);
+            // Sort the list using Merge Sort
+            Sort(strings);
 
-                // Print the sorted array
-                Console.WriteLine("Sorted List:");
-                foreach (int num in numbers)
-                {
-                    Console.Write(num + " ");
-                }
+            // Print the sorted list
+            Console.WriteLine("Sorted List:");
+            foreach (string str in strings)
+            {
+                Console.WriteLine(str);
+            }
             Console.ReadKey();
-            
         }
     }
 }
