@@ -9,94 +9,48 @@ namespace AlgorithmProgram
 {
     public class Program
     {
-        // Merge Sort algorithm to sort a list
-        public static void Sort<T>(List<T> list) where T : IComparable<T>
+        // Function to check if two strings are anagrams
+        public static bool IsAnagram(string str1, string str2)
         {
-            if (list.Count <= 1)
-            {
-                return;
-            }
+            // Convert the strings to character arrays
+            char[] charArray1 = str1.ToCharArray();
+            char[] charArray2 = str2.ToCharArray();
 
-            int mid = list.Count / 2;
-            List<T> left = new List<T>();
-            List<T> right = new List<T>();
+            // Sort the character arrays
+            Array.Sort(charArray1);
+            Array.Sort(charArray2);
 
-            for (int i = 0; i < mid; i++)
-            {
-                left.Add(list[i]);
-            }
+            // Convert the sorted character arrays back to strings
+            string sortedStr1 = new string(charArray1);
+            string sortedStr2 = new string(charArray2);
 
-            for (int i = mid; i < list.Count; i++)
-            {
-                right.Add(list[i]);
-            }
-
-            Sort(left);
-            Sort(right);
-            Merge(list, left, right);
-        }
-
-        private static void Merge<T>(List<T> mergedList, List<T> left, List<T> right) where T : IComparable<T>
-        {
-            int leftIndex = 0;
-            int rightIndex = 0;
-            int mergedIndex = 0;
-
-            while (leftIndex < left.Count && rightIndex < right.Count)
-            {
-                if (left[leftIndex].CompareTo(right[rightIndex]) <= 0)
-                {
-                    mergedList[mergedIndex] = left[leftIndex];
-                    leftIndex++;
-                }
-                else
-                {
-                    mergedList[mergedIndex] = right[rightIndex];
-                    rightIndex++;
-                }
-
-                mergedIndex++;
-            }
-
-            while (leftIndex < left.Count)
-            {
-                mergedList[mergedIndex] = left[leftIndex];
-                leftIndex++;
-                mergedIndex++;
-            }
-
-            while (rightIndex < right.Count)
-            {
-                mergedList[mergedIndex] = right[rightIndex];
-                rightIndex++;
-                mergedIndex++;
-            }
+            // Check if the sorted strings are equal
+            return sortedStr1.Equals(sortedStr2);
         }
 
         public static void Main(string[] args)
         {
 
-            // Create a list of strings
-            List<string> strings = new List<string>();
+            // Prompt the user to enter two strings
+            Console.Write("Enter the first string: ");
+            string str1 = Console.ReadLine();
 
-            // Prompt the user to enter the strings
-            Console.WriteLine("Enter strings (one per line). Enter 'done' to finish.");
-            string input;
-            while ((input = Console.ReadLine()) != "done")
+            Console.Write("Enter the second string: ");
+            string str2 = Console.ReadLine();
+
+            // Check if the strings are anagrams
+            bool isAnagram = IsAnagram(str1, str2);
+
+            // Print the result
+            if (isAnagram)
             {
-                strings.Add(input);
+                Console.WriteLine("The two strings are anagrams.");
             }
-
-            // Sort the list using Merge Sort
-            Sort(strings);
-
-            // Print the sorted list
-            Console.WriteLine("Sorted List:");
-            foreach (string str in strings)
+            else
             {
-                Console.WriteLine(str);
+                Console.WriteLine("The two strings are not anagrams.");
             }
-            Console.ReadKey();
+            Console .ReadKey();
         }
     }
 }
