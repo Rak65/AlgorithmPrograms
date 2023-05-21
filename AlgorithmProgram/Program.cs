@@ -12,28 +12,36 @@ namespace AlgorithmProgram
         public static void Main(string[] args)
         {
 
-            // Test Binary Search
-            int[] intArray = { 2, 4, 6, 8, 10 };
-            int searchItem1 = 6;
-            bool found1 = GenericSearchAndSort<int>.BinarySearch(intArray, searchItem1);
-            Console.WriteLine("Binary Search - Found: " + found1);
+            Console.Write("Enter the number of tasks: ");
+            int n = int.Parse(Console.ReadLine());
 
-            string[] stringArray = { "apple", "banana", "cherry", "date", "elderberry" };
-            string searchItem2 = "cherry";
-            bool found2 = GenericSearchAndSort<string>.BinarySearch(stringArray, searchItem2);
-            Console.WriteLine("Binary Search - Found: " + found2);
+            List<Task> tasks = new List<Task>();
 
-            // Test Bubble Sort
-            double[] doubleArray = { 5.6, 1.2, 3.8, 2.1, 4.9 };
-            GenericSearchAndSort<double>.BubbleSort(doubleArray);
-            Console.WriteLine("Bubble Sort - Sorted Array:");
-            foreach (double item in doubleArray)
+            for (int i = 0; i < n; i++)
             {
-                Console.Write(item + " ");
+                Console.WriteLine("Enter the deadline and minutes required for task {0} (separated by space):", i + 1);
+                string[] input = Console.ReadLine().Split(' ');
+                int deadline = int.Parse(input[0]);
+                int minutes = int.Parse(input[1]);
+                tasks.Add(new Task(deadline, minutes));
             }
-            Console.WriteLine();
-            Console.ReadKey();
 
+            // Sort the tasks based on their deadlines in ascending order
+            tasks.Sort((x, y) => x.Deadline.CompareTo(y.Deadline));
+
+            int maxOvershoot = 0;
+            int completionTime = 0;
+
+            foreach (Task task in tasks)
+            {
+                // Calculate the completion time for the task
+                completionTime += task.Minutes;
+                int overshoot = Math.Max(completionTime - task.Deadline, 0);
+                maxOvershoot = Math.Max(maxOvershoot, overshoot);
+            }
+
+            Console.WriteLine("Maximum amount by which a task's completion time overshoots its deadline: " + maxOvershoot);
+            Console.ReadKey();
         }
     }
 }
