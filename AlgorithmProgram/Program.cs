@@ -9,38 +9,138 @@ namespace AlgorithmProgram
 {
     public class Program
     {
+        // Iterative method to generate all permutations of a string
+        public static List<string> GeneratePermutationsIterative(string str)
+        {
+            List<string> permutations = new List<string>();
+            permutations.Add(str);
+
+            int n = str.Length;
+
+            // Generate permutations using the next permutation algorithm
+            while (true)
+            {
+                int i = n - 2;
+                while (i >= 0 && str[i] >= str[i + 1])
+                {
+                    i--;
+                }
+
+                if (i < 0)
+                {
+                    break;
+                }
+
+                int j = n - 1;
+                while (j >= 0 && str[i] >= str[j])
+                {
+                    j--;
+                }
+
+                SwapCharacters(ref str, i, j);
+                ReverseSubstring(ref str, i + 1, n - 1);
+
+                permutations.Add(str);
+            }
+
+            return permutations;
+        }
+
+        // Recursive method to generate all permutations of a string
+        public static List<string> GeneratePermutationsRecursive(string str)
+        {
+            List<string> permutations = new List<string>();
+            GeneratePermutationsRecursiveHelper(str.ToCharArray(), 0, str.Length - 1, permutations);
+            return permutations;
+        }
+
+        private static void GeneratePermutationsRecursiveHelper(char[] strArray, int startIndex, int endIndex, List<string> permutations)
+        {
+            if (startIndex == endIndex)
+            {
+                permutations.Add(new string(strArray));
+            }
+            else
+            {
+                for (int i = startIndex; i <= endIndex; i++)
+                {
+                    SwapCharacters(ref strArray, startIndex, i);
+                    GeneratePermutationsRecursiveHelper(strArray, startIndex + 1, endIndex, permutations);
+                    SwapCharacters(ref strArray, startIndex, i);
+                }
+            }
+        }
+
+        private static void SwapCharacters(ref string str, int i, int j)
+        {
+            char[] charArray = str.ToCharArray();
+            SwapCharacters(ref charArray, i, j);
+            str = new string(charArray);
+        }
+
+        private static void SwapCharacters(ref char[] charArray, int i, int j)
+        {
+            char temp = charArray[i];
+            charArray[i] = charArray[j];
+            charArray[j] = temp;
+        }
+
+        private static void ReverseSubstring(ref string str, int startIndex, int endIndex)
+        {
+            char[] charArray = str.ToCharArray();
+            ReverseSubstring(ref charArray, startIndex, endIndex);
+            str = new string(charArray);
+        }
+
+        private static void ReverseSubstring(ref char[] charArray, int startIndex, int endIndex)
+        {
+            while (startIndex < endIndex)
+            {
+                char temp = charArray[startIndex];
+                charArray[startIndex] = charArray[endIndex];
+                charArray[endIndex] = temp;
+                startIndex++;
+                endIndex--;
+            }
+        }
+
+        // Check if two arrays of strings are equal
+        public static bool AreStringArraysEqual(List<string> array1, List<string> array2)
+        {
+            if (array1.Count != array2.Count)
+            {
+                return false;
+            }
+
+            HashSet<string> set1 = new HashSet<string>(array1);
+            HashSet<string> set2 = new HashSet<string>(array2);
+
+            return set1.SetEquals(set2);
+        }
+
         public static void Main(string[] args)
         {
 
-            Console.Write("Enter the number of tasks: ");
-            int n = int.Parse(Console.ReadLine());
+            Console.Write("Enter a string: ");
+            string str = Console.ReadLine();
 
-            List<Task> tasks = new List<Task>();
+            List<string> permutationsIterative = GeneratePermutationsIterative(str);
+            List<string> permutationsRecursive = GeneratePermutationsRecursive(str);
 
-            for (int i = 0; i < n; i++)
+            Console.WriteLine("Permutations (Iterative):");
+            foreach (string permutation in permutationsIterative)
             {
-                Console.WriteLine("Enter the deadline and minutes required for task {0} (separated by space):", i + 1);
-                string[] input = Console.ReadLine().Split(' ');
-                int deadline = int.Parse(input[0]);
-                int minutes = int.Parse(input[1]);
-                tasks.Add(new Task(deadline, minutes));
+                Console.WriteLine(permutation);
             }
 
-            // Sort the tasks based on their deadlines in ascending order
-            tasks.Sort((x, y) => x.Deadline.CompareTo(y.Deadline));
-
-            int maxOvershoot = 0;
-            int completionTime = 0;
-
-            foreach (Task task in tasks)
+            Console.WriteLine("Permutations (Recursive):");
+            foreach (string permutation in permutationsRecursive)
             {
-                // Calculate the completion time for the task
-                completionTime += task.Minutes;
-                int overshoot = Math.Max(completionTime - task.Deadline, 0);
-                maxOvershoot = Math.Max(maxOvershoot, overshoot);
+                Console.WriteLine(permutation);
             }
 
-            Console.WriteLine("Maximum amount by which a task's completion time overshoots its deadline: " + maxOvershoot);
+            bool areEqual = AreStringArraysEqual(permutationsIterative, permutationsRecursive);
+            Console.WriteLine("Permutations generated by both methods are equal: " + areEqual);
             Console.ReadKey();
         }
     }
