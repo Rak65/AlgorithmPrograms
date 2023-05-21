@@ -6,3 +6,6 @@ H:\C# Project\AlgorithmProgram\AlgorithmProgram\obj\Debug\AlgorithmProgram.cspro
 H:\C# Project\AlgorithmProgram\AlgorithmProgram\obj\Debug\AlgorithmProgram.csproj.CoreCompileInputs.cache
 H:\C# Project\AlgorithmProgram\AlgorithmProgram\obj\Debug\AlgorithmProgram.exe
 H:\C# Project\AlgorithmProgram\AlgorithmProgram\obj\Debug\AlgorithmProgram.pdb
+H:\C# Project\AlgorithmProgram\AlgorithmProgram\bin\Debug\Newtonsoft.Json.dll
+H:\C# Project\AlgorithmProgram\AlgorithmProgram\bin\Debug\Newtonsoft.Json.xml
+H:\C# Project\AlgorithmProgram\AlgorithmProgram\obj\Debug\AlgorithmProgram.csproj.CopyComplete
