@@ -9,59 +9,64 @@ namespace AlgorithmProgram
 {
     public class Program
     {
-        public static bool BinarySearch<T>(T[] words, T searchWord) where T : IComparable<T>
+        // Bubble Sort algorithm to sort an array
+        public static void Sort<T>(T[] arr) where T : IComparable<T>
         {
-            int left = 0;
-            int right = words.Length - 1;
+            int n = arr.Length;
+            bool swapped;
 
-            while (left <= right)
+            for (int i = 0; i < n - 1; i++)
             {
-                int mid = left + (right - left) / 2;
+                swapped = false;
 
-                int comparison = searchWord.CompareTo(words[mid]);
+                for (int j = 0; j < n - i - 1; j++)
+                {
+                    if (arr[j].CompareTo(arr[j + 1]) > 0)
+                    {
+                        // Swap arr[j] and arr[j + 1]
+                        T temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
 
-                if (comparison == 0)
-                {
-                    return true; // Word found
+                        swapped = true;
+                    }
                 }
-                else if (comparison < 0)
+
+                // If no elements were swapped in the inner loop, the array is already sorted
+                if (!swapped)
                 {
-                    right = mid - 1; // Search the left half
-                }
-                else
-                {
-                    left = mid + 1; // Search the right half
+                    break;
                 }
             }
-
-            return false; // Word not found
         }
 
         public static void Main(string[] args)
         {
-                string[] words = { "Ram", "Mohan", "Ramesh", "Delhi", "Bangalore", "Mumbai" };
+               // Prompt the user to enter the number of integers
+                Console.Write("Enter the number of integers: ");
+                int count = int.Parse(Console.ReadLine());
 
-                // Sort the word list
-                Array.Sort(words);
+                // Create an array to store the integers
+                int[] numbers = new int[count];
 
-                // Prompt the user to enter a word to search
-                Console.Write("Enter a word to search: ");
-                string searchWord = Console.ReadLine();
-
-                // Perform binary search
-                bool isWordFound = BinarySearch(words, searchWord);
-
-                // Print the result
-                if (isWordFound)
+                // Prompt the user to enter the integers
+                for (int i = 0; i < count; i++)
                 {
-                    Console.WriteLine("Word found in the list.");
-                }
-                else
-                {
-                    Console.WriteLine("Word not found in the list.");
+                    Console.Write("Enter integer #{0}: ", i + 1);
+                    numbers[i] = int.Parse(Console.ReadLine());
                 }
 
-            Console .ReadKey ();
+                // Sort the array using Bubble Sort
+                Sort(numbers);
+
+                // Print the sorted array
+                Console.WriteLine("Sorted List:");
+                foreach (int num in numbers)
+                {
+                    Console.Write(num + " ");
+                }
+            Console.ReadKey();
+            
         }
     }
 }
