@@ -9,45 +9,31 @@ namespace AlgorithmProgram
 {
     public class Program
     {
-        // Recursive function to guess the number
-        public static int GuessNumberRecursive(int low, int high)
-        {
-            if (low == high)
-            {
-                return low;
-            }
-
-            int mid = (low + high) / 2;
-
-            Console.Write("Is the number between {0} and {1}? (y/n): ", low, mid);
-            char response = Console.ReadKey().KeyChar;
-            Console.WriteLine();
-
-            if (response == 'y' || response == 'Y')
-            {
-                return GuessNumberRecursive(low, mid);
-            }
-            else
-            {
-                return GuessNumberRecursive(mid + 1, high);
-            }
-        }
-
         public static void Main(string[] args)
         {
 
-            Console.Write("Enter the value of N (where N = 2^n): ");
-            int n = int.Parse(Console.ReadLine());
+            // Test Binary Search
+            int[] intArray = { 2, 4, 6, 8, 10 };
+            int searchItem1 = 6;
+            bool found1 = GenericSearchAndSort<int>.BinarySearch(intArray, searchItem1);
+            Console.WriteLine("Binary Search - Found: " + found1);
 
-            int low = 0;
-            int high = (int)Math.Pow(2, n) - 1;
+            string[] stringArray = { "apple", "banana", "cherry", "date", "elderberry" };
+            string searchItem2 = "cherry";
+            bool found2 = GenericSearchAndSort<string>.BinarySearch(stringArray, searchItem2);
+            Console.WriteLine("Binary Search - Found: " + found2);
 
-            Console.WriteLine("Think of a number between 0 and {0} (inclusive).", high);
-
-            int guessedNumber = GuessNumberRecursive(low, high);
-
-            Console.WriteLine("The number you were thinking of is: " + guessedNumber);
+            // Test Bubble Sort
+            double[] doubleArray = { 5.6, 1.2, 3.8, 2.1, 4.9 };
+            GenericSearchAndSort<double>.BubbleSort(doubleArray);
+            Console.WriteLine("Bubble Sort - Sorted Array:");
+            foreach (double item in doubleArray)
+            {
+                Console.Write(item + " ");
+            }
+            Console.WriteLine();
             Console.ReadKey();
+
         }
     }
 }
